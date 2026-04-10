@@ -14,7 +14,7 @@ const navItems = [
 ];
 
 export function Sidebar() {
-  const { user, logout } = useAuth();
+  const { user, userProfile, logout } = useAuth();
 
   const filteredNavItems = navItems.filter(item => item.roles.includes(user));
   return (
@@ -41,17 +41,17 @@ export function Sidebar() {
       </nav>
 
       <div className="sidebar-footer">
-        <div className="user-profile" style={{ marginBottom: '16px' }}>
-          <div className="avatar">{user === 'authority' ? 'A' : 'C'}</div>
+        <div className="user-profile" style={{ marginBottom: '12px' }}>
+          <div className="avatar">{userProfile?.name?.[0] || (user === 'authority' ? 'A' : 'C')}</div>
           <div className="user-info">
-            <span className="user-name">{user === 'authority' ? 'Admin User' : 'Citizen'}</span>
-            <span className="user-role">{user === 'authority' ? 'City Council' : 'Verified User'}</span>
+            <span className="user-name">{userProfile?.name || (user === 'authority' ? 'Admin User' : 'Citizen')}</span>
+            <span className="user-role">{userProfile?.department || (user === 'authority' ? 'Government' : 'Verified Citizen')}</span>
           </div>
         </div>
         <button
           onClick={logout}
           className="nav-link"
-          style={{ width: '100%', color: 'var(--status-severe)', padding: '8px 16px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)' }}
+          style={{ width: '100%', color: 'var(--status-severe)', padding: '8px 16px', background: 'rgba(255, 71, 87, 0.08)', border: '1px solid rgba(255, 71, 87, 0.2)' }}
         >
           <LogOut size={18} />
           Sign Out
